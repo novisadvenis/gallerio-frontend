@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import Basic from "./component/Basic/Basic";
+import Mix from "./component/Mix/Mix";
+import Carousel from "./component/Carousel/Carousel";
+import Dropdown from "./component/Dropdown/Dropdown";
+import {ImageList} from "./component/ImageList"
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [galleryType, setGalleryType] = useState("");
+
+    const renderSelected = (param: string) => {
+        switch (param) {
+            case "Carousel":
+                return <Carousel imageList={ImageList}/>;
+                break;
+            case "Mix":
+                return <Mix imageList={ImageList}/>;
+                break;
+            default:
+                return <Basic imageList={ImageList}/>;
+        }
+    }
+
+    return (
+        <div className="App">
+            <Dropdown selected={setGalleryType}/>
+            {renderSelected(galleryType)}
+        </div>
+    );
 }
 
 export default App;
