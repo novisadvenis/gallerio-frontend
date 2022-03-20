@@ -4,6 +4,7 @@ import Mix from "./component/Mix/Mix";
 import Carousel from "./component/Carousel/Carousel";
 import Dropdown from "./component/Dropdown/Dropdown";
 import {ImageList} from "./component/ImageList"
+import Table from "./component/UploadTable/Table";
 
 function App() {
     const [galleryType, setGalleryType] = useState("");
@@ -25,6 +26,8 @@ function App() {
         <div className="App">
             <Dropdown selected={setGalleryType}/>
             {renderSelected(galleryType)}
+            <hr />
+            <Table />
         </div>
     );
 }
