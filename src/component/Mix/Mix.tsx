@@ -1,13 +1,29 @@
 import React from "react";
 import GalleryProps from "../GalleryProps";
 import Image from "../Image";
+import Queue from "../../model/Queue";
 
 
-const prepareElement = ({imageList}: GalleryProps): JSX.Element => {
+const widthFullImage = (src: string, index: number) => {
+    return (
+        <div className="w-full p-1 md:p-2" key={index}>
+            <img alt="gallery" className="block object-cover object-center w-full h-full rounded-lg"
+                 src={src}/>
+        </div>
+    )
+}
+
+const widthHalfImage = (src: string, index: number) => {
+    return (<div className="w-1/2 p-1 md:p-2" key={index}>
+        <img alt="gallery" className="block object-cover object-center w-full h-full rounded-lg"
+             src={src}/>
+    </div>);
+}
+const prepareElement = ({imageList}: GalleryProps) => {
     let perChunk = 3;
 
-    let result = imageList.reduce((resultArray: Image[], item: Image, index: number) => {
-        console.log("resultArray", resultArray)
+    let result = imageList.reduce((resultArray: Image[][], item: Image, index: number) => {
+        //console.log("resultArray", resultArray)
         const chunkIndex = Math.floor(index / perChunk)
 
         if (!resultArray[chunkIndex]) {
@@ -21,146 +37,65 @@ const prepareElement = ({imageList}: GalleryProps): JSX.Element => {
         return resultArray
     }, []);
 
-    console.table(result)
-    result.map((data, index: number, array: Image[]) => {
-        let counter = 0;
-        console.log("data", data)
-        array.map((value: Image, index1, array1) => {
+    //console.table(result)
 
-            console.log("image", value);
-            let imageSrc : string = value.image.src;
-            if (index1 === 2 && counter === 0) {
+    let arrayCounter = 1;
+    let ele = result.map((data, index: number) => {
 
-                counter += 1;
-                return (
-                    <div className="w-full p-1 md:p-2" key={index}>
-                        <img alt="gallery" className="block object-cover object-center w-full h-full rounded-lg"
-                             src={imageSrc}/>
-                    </div>
-                );
-            } else {
-                counter = 0;
-                return (
-                    <div className="w-1/2 p-1 md:p-2" key={index}>
-                        <img alt="gallery" className="block object-cover object-center w-full h-full rounded-lg"
-                             src={imageSrc}/>
-                    </div>
-                );
-            }
-        })
-
-    });
-
-
-    return (
-        <>
-        </>
-    );
-    /*
-        let elements = new Array();
-        let imgArr = new Array();
-        imageList.map((data: Image, index: number, array: Image[]) => {
-           let counter = index + 1;
-
-            if (counter % 3 === 0 || counter % 4 === 0) {
-                imgArr.push(
-                    <div className="w-full p-1 md:p-2" key={index}>
-                        <img alt="gallery" className="block object-cover object-center w-full h-full rounded-lg"
-                             src={data.image.src}/>
-                    </div>)
-                if (counter % 3 === 0) {
-                    elements.push(imgArr)
-                    imgArr = new Array();
-                    counter -= 3;
-                }
-            } else {
-                imgArr.push(
-                    <div className="w-1/2 p-1 md:p-2" key={index}>
-                        <img alt="gallery" className="block object-cover object-center w-full h-full rounded-lg"
-                             src={data.image.src}/>
-                    </div>)
-            }
-        });
-
-        return (
-            <>
-                {elements.map((ele, index) => {
-                    return (
-                        <div className="flex flex-wrap w-1/2" key={index}>
-                            {ele}
-                        </div>
-                    );
-
-                })}
-
-            </>
-        );*/
-    /*
-    imageList.map((data: Image, index: number) => {
-        if (index < 3) {
-            if (index === 2) {
-                elements.push(
-                    <div className="w-full p-1 md:p-2" key={index}>
-                        <img alt="gallery" className="block object-cover object-center w-full h-full rounded-lg"
-                             src={data.image.src}/>
-                    </div>
-                );
-
-            } else {
-                elements.push(
-                    <div className="w-1/2 p-1 md:p-2" key={index}>
-                        <img alt="gallery" className="block object-cover object-center w-full h-full rounded-lg"
-                             src={data.image.src}/>
-                    </div>
-                );
-            }
+        console.log("ArrayCounter", arrayCounter);
+        let ele1;
+        if (data.length < 3) {
+            ele1 = data.map(((value, index1) => {
+                return widthFullImage(value.image.src, index1)
+            }))
         } else {
-            if (index === 3) {
-                elements.push(
-                    <div className="w-full p-1 md:p-2" key={index}>
-                        <img alt="gallery" className="block object-cover object-center w-full h-full rounded-lg"
-                             src={data.image.src}/>
-                    </div>
-                );
-            } else {
-                elements.push(
-                    <div className="w-1/2 p-1 md:p-2" key={index}>
-                        <img alt="gallery" className="block object-cover object-center w-full h-full rounded-lg"
-                             src={data.image.src}/>
-                    </div>
-                );
-            }
-        }
-    });
-    return (
-        <>
-            <div className="flex flex-wrap w-1/2">
-                {elements.slice(0, 3).map((ele) => {
-                    return ele;
-                })}
-            </div>
-            <div className="flex flex-wrap w-1/2">
-                {elements.slice(3, elements.length).map((ele) => {
-                    return ele;
-                })}
-            </div>
-            <div className="flex flex-wrap w-1/2">
-                {elements.slice(3, elements.length).map((ele) => {
-                    return ele;
-                })}
-            </div>
-        </>
-    );*/
+            ele1 = data.map((value, index1) => {
 
-}
+                let imageSrc: string = value.image.src;
+                let keyIndex = arrayCounter * (index1 + 1);
+                if (arrayCounter % 2 === 0) {
+                    if (index1 === 0) {
+                        console.log("i am big", index1)
+                        return widthFullImage(imageSrc, index1)
+                    } else {
+                        console.log("i am small", index1)
+                        return widthHalfImage(imageSrc, index1)
+                    }
+                } else {
+                    if (index1 === 2) {
+                        console.log("i am big", index1)
+                        return widthFullImage(imageSrc, index1)
+                    } else {
+                        console.log("i am small", index1)
+                        return widthHalfImage(imageSrc, index1)
+                    }
+                }
+            });
+
+        }
+        arrayCounter++;
+        return ele1;
+    });
+
+    //console.log("element", ele)
+    return ele;
+};
 
 const Mix = (images: GalleryProps) => {
     return (
         <section className="overflow-hidden text-gray-700">
-            <div className="container px-5 py-2 mx-auto lg:pt-24 lg:px-32">
-                <div className="flex flex-wrap -m-1 md:-m-2">
-                    {prepareElement(images)}
-                </div>
+            <div className="container flex px-5 py-2 mx-auto lg:pt-24 lg:px-32">
+
+                {prepareElement(images).map((array) => {
+                    return (
+                        <div className="flex w-full h-full flex-wrap">
+                            {array}
+                        </div>
+                    )
+                })
+
+                }
+
             </div>
         </section>
     );
