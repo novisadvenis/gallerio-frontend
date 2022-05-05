@@ -1,7 +1,7 @@
-import Image from "./Image";
+import ImageInterface from "./ImageInterface";
 
 interface GalleryProps {
-    imageList: Array<Image>;
+    imageList: Array<ImageInterface>;
 
 }
 
