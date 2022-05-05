@@ -21,7 +21,7 @@ function App() {
             await axios.get('http://localhost:8080/image/getAll')
                 .then((res) => {
                     setImageList(res.data);
-                    console.log("ImageInterface List set")
+
                 })
             setLoading(false);
         }

@@ -28,7 +28,7 @@ const Upload = () => {
     const onFileChanged = (event: any) => {
         selectedFile = event.target.files[0];
         //setSelectedFile();
-        console.log("upload fucntion running.....")
+
         onUpload();
     }
 
@@ -38,7 +38,7 @@ const Upload = () => {
 
     //Gets called when the user clicks on submit to upload the image
     const onUpload = () => {
-        console.log(selectedFile);
+
         //FormData API provides methods and properties to allow us easily prepare form data to be sent with POST HTTP requests.
         const uploadImageData = new FormData();
         // @ts-ignore
@@ -64,11 +64,11 @@ const Upload = () => {
         axios.get('http://localhost:8080/image/get/' + imageName)
             .then((res) => {
                 retrieveResponse = res;
-                console.log("response", res)
+
                 setBase64Data(retrieveResponse.data.thumbnail);
                 setImageId(retrieveResponse.data.id);
-                console.log("thumbnail", retrieveResponse.data.thumbnail);
-                console.log("base64", 'data:image/png;base64,' + base64Data)
+
+
             });
     }
 

@@ -21,7 +21,7 @@ function Carousel({imageList}: galleryProps) {
     };
 
     const updateImageName = (id:number, value:string) => {
-        console.log("updating image name value")
+
         const update = async () => {
             await axios.get('http://localhost:8080/image/update/'+ id+"?name="+value)
         }

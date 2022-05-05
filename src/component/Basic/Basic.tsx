@@ -17,17 +17,17 @@ const Basic = ({imageList}: GalleryProps) => {
 
 
     const onDelete = () => {
-        console.log("deleting request processing")
+
         const deleteImage = async () => {
             // @ts-ignore
             await axios.delete('http://localhost:8080/image/delete/'+ localImageList[currentIndex].id );
         }
         deleteImage();
-        console.log("deleting request finished")
+
         // @ts-ignore
         delete localImageList[currentIndex];
-        console.log("removing current index image from imageList");
-        console.log("closing delete Overlay")
+
+
         setDeleteOverlay(false);
 
     };
@@ -45,7 +45,7 @@ const Basic = ({imageList}: GalleryProps) => {
                          onClick={()=>{
                              setOverlay(false);
                              setSelectedImg(null);
-                             console.log("closing overlay")
+
                          }}
                     >
                         <div

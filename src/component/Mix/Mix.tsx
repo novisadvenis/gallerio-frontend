@@ -24,7 +24,7 @@ const prepareElement = ({imageList}: GalleryProps) => {
     let perChunk = 3;
 
     let result = imageList.reduce((resultArray: ImageInterface[][], item: ImageInterface, index: number) => {
-        //console.log("resultArray", resultArray)
+
         const chunkIndex = Math.floor(index / perChunk)
 
         if (!resultArray[chunkIndex]) {
@@ -43,7 +43,7 @@ const prepareElement = ({imageList}: GalleryProps) => {
     let arrayCounter = 1;
     let ele = result.map((data, index: number) => {
 
-        console.log("ArrayCounter", arrayCounter);
+
         let ele1;
         if (data.length < 3) {
             ele1 = data.map(((value, index1) => {
@@ -56,18 +56,18 @@ const prepareElement = ({imageList}: GalleryProps) => {
                 let keyIndex = arrayCounter * (index1 + 1);
                 if (arrayCounter % 2 === 0) {
                     if (index1 === 0) {
-                        console.log("i am big", index1)
+
                         return widthFullImage(imageSrc, index1)
                     } else {
-                        console.log("i am small", index1)
+
                         return widthHalfImage(imageSrc, index1)
                     }
                 } else {
                     if (index1 === 2) {
-                        console.log("i am big", index1)
+
                         return widthFullImage(imageSrc, index1)
                     } else {
-                        console.log("i am small", index1)
+
                         return widthHalfImage(imageSrc, index1)
                     }
                 }
@@ -78,7 +78,7 @@ const prepareElement = ({imageList}: GalleryProps) => {
         return ele1;
     });
 
-    //console.log("element", ele)
+
     return ele;
 };
 
@@ -92,9 +92,9 @@ const Mix = (images: GalleryProps) => {
                 padding: "10px"}}>Mix View</div>
             <div className="container flex px-5 py-2 w-full rounded-lg
             my-8 bg-gray-900 px-3.5 py-3.5 snap-x flex flex-row min-h-min overflow-x-auto mx-auto" >
-                {prepareElement(images).map((array) => {
+                {prepareElement(images).map((array,index) => {
                     return (
-                        <div className="flex max-w-fit flex-wrap "
+                        <div key={"mix-"+index} className="flex max-w-fit flex-wrap "
                         style={{minWidth:"370px"}}>
                             {array}
                         </div>

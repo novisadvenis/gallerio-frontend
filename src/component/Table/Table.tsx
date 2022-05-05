@@ -7,14 +7,14 @@ import ImageInterface from "../ImageInterface";
 const Table = ({list,img, ...props}: any ) => {
 
     const updateMetaDataValue = (id:number, value:string) => {
-        console.log("updating metadata value")
+
         const update = async () => {
             await axios.get('http://localhost:8080/metadata/update/'+ id+"?value="+value)
         }
         update();
         // @ts-ignore
         list.find(m=> m.id ===id).value = value;
-        console.log("finished updating metadata value")
+
     }
 
     return (
@@ -45,10 +45,10 @@ const Table = ({list,img, ...props}: any ) => {
                                            placeholder={metaData.value}
 
                                 onBlur={(e)=>{
-                                    console.log("currentInput value ",e.currentTarget.value);
+
                                     //todo call request to update metadata
                                     let id: number = parseInt(e.currentTarget.id.split("-")[1]);
-                                    console.log("metadata id ", id);
+
                                     updateMetaDataValue(id,e.currentTarget.value);
                                 }}
                                 /></td>
